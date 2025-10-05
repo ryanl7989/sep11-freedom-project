@@ -8,7 +8,7 @@ class Gamescene extends Phaser.Scene {
     }
 
     create() {
-        g.circle = 
+        g.circle = this.add.circle(config.width/2.config.height/2)
     }
 
     update() {
