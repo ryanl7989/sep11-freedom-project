@@ -3,8 +3,17 @@ class Gamescene extends Phaser.Scene {
         super('Gamescene')
     }
 
+    preload() {
 
+    }
 
+    create() {
+
+    }
+
+    update() {
+        
+    }
 }
 
 
