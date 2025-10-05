@@ -4,6 +4,11 @@ const config: {
     width: window.innerWidth,
     backgroundColor: '#123456',
     physics: {
-        default: 'arcade'
-    }
+        default: 'arcade',
+        arcade: {
+            gravity: {y:0, x:0},
+            debug: false
+        }
+    },
+    scene: [GameScene]
 }
