@@ -8,11 +8,11 @@ class Gamescene extends Phaser.Scene {
     }
 
     create() {
-
+        g.circle = 
     }
 
     update() {
-        
+
     }
 }
 
