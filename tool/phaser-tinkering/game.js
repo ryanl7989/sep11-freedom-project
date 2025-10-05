@@ -1,3 +1,7 @@
+
+
+
+const g = {}
 const config: {
     type: Phaser.AUTO,
     height: window.innerHeight,
