@@ -8,7 +8,7 @@
 
 ### 10/5/25:
 * Today I watched and followed along with https://www.youtube.com/watch?v=UAdWDHb3zPQ which was a tutorial on the basics and made a small animation of balls bouncing against walls using phaser.
-* I also learned the main functions of Phaser like `preload()` `create()` `update()`. `preload()` loads premade code before the screen loads
+* I also learned the main functions of Phaser like `preload()` `create()` `update()`. `preload()` loads game assets like pictures before the game begins. `create()` adds objects like sprites into the game. `update()` constantly updates the game
 
 <!--
 * Links you used today (websites, videos, etc)
