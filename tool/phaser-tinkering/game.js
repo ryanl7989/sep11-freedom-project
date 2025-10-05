@@ -80,8 +80,6 @@ function randomColor() {
     return '0x' + c
 }
 
-
-
 window.addEventListener('resize', () => {
     window.location.reload()
 })
