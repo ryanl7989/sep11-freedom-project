@@ -1,3 +1,14 @@
+class Gamescene extends Phaser.Scene {
+    constructor() {
+        super('Gamescene')
+    }
+
+
+
+}
+
+
+
 
 window.addEventListener('resize', () => {
     window.location.reload()
