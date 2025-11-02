@@ -6,7 +6,7 @@
 
 ---
 
-### 10/5/25:
+### 10/5/2025:
 Today I watched and followed along with https://www.youtube.com/watch?v=UAdWDHb3zPQ which was a tutorial on the basics and made a small animation of balls bouncing against walls using phaser. I also learned the main functions of Phaser like `preload()` `create()` `update()` froomo this  tutorial.
 * `preload()` loads game assets like pictures before the game begins.
 * `create()` adds objects like sprites into the game.
@@ -64,5 +64,13 @@ I  thought that I had done something wrong like putting something in the wrong p
 * What you're going to try next
 -->
 
-### X/X/XX:
-* Text
+### 10/30/2025:
+* Today I followed along with this video on sprites "https://www.youtube.com/watch?v=ElAmJj8Tfo8"
+  * `this.load.atlas()` can be used to load sprite sheets for animation
+  * Learned how to make moving controls using `setVelocity()`
+  * Used `this.anims.create()` to create animations for walking and standing. Used `"spriteName".anims.play()` to play the animations.
+  * Followed along using a sprite I found online: [My file](phaser-tinkering2/game.js)
+* I used this website "https://www.leshylabs.com/apps/sstool/" to turn an image of a Sprite Sheet into a Sprite Sheet and put the image and the json
+* Looked through the [Phaser Documentation](https://docs.phaser.io/phaser/getting-started/what-is-phaser) to find information on sprites and animations.
+* Next Steps:
+  *  Learn how to make the camera follow the sprite
