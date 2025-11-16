@@ -74,3 +74,16 @@ I  thought that I had done something wrong like putting something in the wrong p
 * Looked through the [Phaser Documentation](https://docs.phaser.io/phaser/getting-started/what-is-phaser) to find information on sprites and animations.
 * Next Steps:
   *  Learn how to make the camera follow the sprite
+
+
+### 10/16/2025:
+* Today I learned how to make the screen follow a sprite in this [file](phaser-tinkering2/game.js) that I used last week that already had a sprite.
+  * `this.cameras.main.startFollow()` follows the sprite that is put between the parenthesis
+  * `this.cameras.main.setZoom()` changes the amount of zoom on the screen
+  * I used [Phaser Documentation](https://docs.phaser.io/phaser/getting-started/what-is-phaser) to find out how to do this
+  * Used this [example](https://phaser.io/examples/v3.85.0/camera/view/follow-sprite) to help learn about cameras
+* I also set a background with borders around it to stop the sprite from moving out of it.
+  * `.setCollideWorldBounds(true)` stops a sprite from going outside of the game area
+  * `this.load.image(keyName, 'assetImage')` loads images into the file
+* Next Steps:
+  *  Add another sprite that moves towards the main sprite
