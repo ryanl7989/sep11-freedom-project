@@ -76,7 +76,7 @@ I  thought that I had done something wrong like putting something in the wrong p
   *  Learn how to make the camera follow the sprite
 
 
-### 10/16/2025:
+### 11/16/2025:
 * Today I learned how to make the screen follow a sprite in this [file](phaser-tinkering2/game.js) that I used last week that already had a sprite.
   * `this.cameras.main.startFollow()` follows the sprite that is put between the parenthesis
   * `this.cameras.main.setZoom()` changes the amount of zoom on the screen
@@ -87,3 +87,11 @@ I  thought that I had done something wrong like putting something in the wrong p
   * `this.load.image(keyName, 'assetImage')` loads images into the file
 * Next Steps:
   *  Add another sprite that moves towards the main sprite
+
+
+### 10/16/2025:
+* Today I learned how to make one sprite follow another sprite in this [file](phaser-tinkering2/game.js) that I used for the last 2 weeks.
+  * Found a [goblin sprite](https://craftpix.net/product/goblin-pixel-art-character-sprite-pack/?srsltid=AfmBOootY-nkddgt8bIpCCCiCR8Y3AUCUl-iv3kKVcvMDsy1TjmWG_Ug) online and created another sprite called "goblin" to follow the knight
+  * Used the goblin spritesheet to make a walking animation for the goblin
+  * I put this code `this.physics.moveToObject(this.goblin, this.knight, 100);` into the update section which make the goblin sprite follow the knight sprite at 100 volocity
+  * Used [Phaser Documentation](https://docs.phaser.io/phaser/concepts/physics/arcade) to learn the code
