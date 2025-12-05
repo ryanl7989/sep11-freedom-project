@@ -27,29 +27,44 @@ class GameScene extends Phaser.Scene {
 
         this.anims.create({ key:'gmoving', frames: this.anims.generateFrameNames('goblin', {prefix:'goblin', end: 4, zeroPad:1}), repeat: -1});
 
-        // sprite creation
+        // knight spawner
         this.knight = this.physics.add.sprite(backgroundImage.width/2, backgroundImage.height/2, 'knight');
         this.knight.setCollideWorldBounds(true);
 
-        this.goblin = this.physics.add.sprite(backgroundImage.width/4, backgroundImage.height/2, 'goblin');
+        // Goblin spawner
+        this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
         this.goblin.setCollideWorldBounds(true);
+        this.goblinArray = []
+        this.time.addEvent({
+            delay: 4000,
+            callback: () => { this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
+            this.goblinArray.push(this.goblin)
+            this.goblin.setCollideWorldBounds(true);
+            console.log(this.goblinArray)
+            },
+            loop: true
+        });
 
-        // controls
+
+
+        // create controls
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // game follows the knight
         this.cameras.main.startFollow(this.knight)
-        this.cameras.main.setZoom(1.5);
+        this.cameras.main.setZoom(2);
 
     }
 
     update () {
-        // controls
 
-           this.physics.moveToObject(this.goblin, this.knight, 100);
-
+    // makes goblins follow knight
+        for (let i = 0; i < this.goblinArray.length; i++) {
+        this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
+        }
         this.goblin.anims.play('gmoving', true);
 
+    // controls
         this.knight.setVelocity(0,0)
 
         if (this.cursors.left.isDown)
@@ -92,11 +107,7 @@ class GameScene extends Phaser.Scene {
             this.knight.anims.play('kmoving', true);
         }
 
-        // if (this.cursors.space.isDown)
-        // {
-        //     setInterval(this.knight = this.physics.add.sprite(800, 300, 'knight'),200);
 
-        // }
 
         if (this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown || this.cursors.down.isDown) {
         } else {

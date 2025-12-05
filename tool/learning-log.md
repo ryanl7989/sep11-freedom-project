@@ -89,9 +89,37 @@ I  thought that I had done something wrong like putting something in the wrong p
   *  Add another sprite that moves towards the main sprite
 
 
-### 10/16/2025:
+### 11/23/2025:
 * Today I learned how to make one sprite follow another sprite in this [file](phaser-tinkering2/game.js) that I used for the last 2 weeks.
   * Found a [goblin sprite](https://craftpix.net/product/goblin-pixel-art-character-sprite-pack/?srsltid=AfmBOootY-nkddgt8bIpCCCiCR8Y3AUCUl-iv3kKVcvMDsy1TjmWG_Ug) online and created another sprite called "goblin" to follow the knight
   * Used the goblin spritesheet to make a walking animation for the goblin
   * I put this code `this.physics.moveToObject(this.goblin, this.knight, 100);` into the update section which make the goblin sprite follow the knight sprite at 100 volocity
   * Used [Phaser Documentation](https://docs.phaser.io/phaser/concepts/physics/arcade) to learn the code
+
+
+### 12/5/2025
+
+Today I made sprites spawn in random places in the scene in this [file](phaser-tinkering2/game.js) that I used before which had goblin sprites inside already.
+I made the goblins spawn in random places around the map using this code:
+```js
+this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin')
+```
+This would spawn a goblin a in random places inside of the map. Then I put it in an array called `goblinArray` which would be where I placed each goblin that spawned in the map. Then I wraped it in a loop that would play every 4 seconds. This is what it looked like after that:
+```js
+this.time.addEvent({
+  delay: 4000,
+  callback: () => { this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
+  this.goblinArray.push(this.goblin)
+  this.goblin.setCollideWorldBounds(true);
+  console.log(this.goblinArray)
+  },
+  loop: true
+});
+```
+The `this.time.addEvent` would create that loop, `delay:4000` would be the time between eaeh loop in milliseconds, and I would put the code that I want to loop inside of `callback` which is the code to spawn a goblin, push the goblin into the goblin array, and then stop it from leaving the map. Then I went to the update section and made a loop which would constantly loop through the array and make each goblin in the array follow the knight. This is the code for that:
+```js
+for (let i = 0; i < this.goblinArray.length; i++) {
+  this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
+}
+this.goblin.anims.play('gmoving', true);
+```
