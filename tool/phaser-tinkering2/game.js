@@ -32,12 +32,12 @@ class GameScene extends Phaser.Scene {
         this.knight.setCollideWorldBounds(true);
 
         // Goblin spawner
-        this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
-        this.goblin.setCollideWorldBounds(true);
+        this.goblin = this.physics.add.sprite(10000, 10000, 'goblin');
         this.goblinArray = []
         this.time.addEvent({
             delay: 4000,
             callback: () => { this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
+            this.physics.add.collider(this.goblin, this.knight);
             this.goblinArray.push(this.goblin)
             this.goblin.setCollideWorldBounds(true);
             console.log(this.goblinArray)
@@ -47,12 +47,15 @@ class GameScene extends Phaser.Scene {
 
 
 
+        // MAKE ARRAY FOR GOBLIN COLLISION
+
+
         // create controls
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // game follows the knight
         this.cameras.main.startFollow(this.knight)
-        this.cameras.main.setZoom(2);
+        // this.cameras.main.setZoom(2);
 
     }
 
@@ -60,9 +63,13 @@ class GameScene extends Phaser.Scene {
 
     // makes goblins follow knight
         for (let i = 0; i < this.goblinArray.length; i++) {
-        this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
+            this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
+            for (let a = 0; a < this.goblinArray.length; a++){
+                this.physics.add.collider(this.goblinArray[i], this.goblinArray[a]);
+            }
         }
         this.goblin.anims.play('gmoving', true);
+
 
     // controls
         this.knight.setVelocity(0,0)

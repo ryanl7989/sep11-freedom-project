@@ -123,3 +123,17 @@ for (let i = 0; i < this.goblinArray.length; i++) {
 }
 this.goblin.anims.play('gmoving', true);
 ```
+
+
+### 12/14/2025
+Today I learned how to add collision between sprites in this [file](phaser-tinkering2/game.js) using a knight and a goblin sprite. I used this code `this.physics.add.collider(this.goblin, this.knight);` which would stop the knight and the goblin from going through each other. A problem that I had was that when I spawned new goblins, they would walk through each other. I fixed this by makeing a loop inside a loop. This is what it looked like:
+
+```js
+for (let i = 0; i < this.goblinArray.length; i++) {
+    this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
+    for (let a = 0; a < this.goblinArray.length; a++){
+        this.physics.add.collider(this.goblinArray[i], this.goblinArray[a]);
+    }
+}
+```
+The first loop was a loop that I made before which was used to make each goblin in an array of goblins, follow the knight. I used this loop to make a new loop inside of it which would select any new goblins in an array and add collision between it and any previous goblins. and since this was in the update section of phaser, it would constantly repeat, adding collision with any new goblins that would be created.
