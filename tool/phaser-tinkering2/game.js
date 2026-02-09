@@ -4,7 +4,7 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        // load assets
+    // load assets
         this.load.atlas('knight', 'assets/knightSpriteSheet.png', 'assets/knightSprites.json');
         this.load.atlas('goblin', 'assets/goblinSpriteSheet.png', 'assets/goblinSprites.json');
         this.load.image('oldDungeon', 'assets/oldDungeon.png');
@@ -12,7 +12,7 @@ class GameScene extends Phaser.Scene {
 
     create() {
 
-        // background
+    // background
         const backgroundImage = this.add.image(0, 0, 'oldDungeon');
         backgroundImage.setOrigin(0.5, 0.5);
         backgroundImage.setPosition(this.sys.game.config.width / 2, this.sys.game.config.height / 2);
@@ -21,39 +21,46 @@ class GameScene extends Phaser.Scene {
         const scale = Math.max(scaleX, scaleY);
         backgroundImage.setScale(scale);
 
-        //animations for sprites
+    // animations for sprites
         this.anims.create({ key:'kmoving', frames: this.anims.generateFrameNames('knight', {prefix:'knight', end: 6, zeroPad:1}), repeat: -1});
         this.anims.create({ key:'kstand', frames: this.anims.generateFrameNames('knight', {prefix:'knightStand', end: 0, zeroPad:1}), repeat: -1});
 
         this.anims.create({ key:'gmoving', frames: this.anims.generateFrameNames('goblin', {prefix:'goblin', end: 4, zeroPad:1}), repeat: -1});
 
-        // knight spawner
+    // knight spawner
         this.knight = this.physics.add.sprite(backgroundImage.width/2, backgroundImage.height/2, 'knight');
         this.knight.setCollideWorldBounds(true);
 
-        // Goblin spawner
+    // Goblin spawner
+
+
         this.goblin = this.physics.add.sprite(10000, 10000, 'goblin');
+
+
         this.goblinArray = []
         this.time.addEvent({
             delay: 4000,
-            callback: () => { this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin');
-            this.physics.add.collider(this.goblin, this.knight);
-            this.goblinArray.push(this.goblin)
-            this.goblin.setCollideWorldBounds(true);
-            console.log(this.goblinArray)
+            callback: () => {
+                this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin'); // creates the goblin at a random place
+                function destroyknight() {
+                    this.knight.destroy(); // if the knight hits a goblin the knight geys destroyed
+                }
+                this.physics.add.collider(this.goblin, this.knight, destroyknight, null, this); // adds collison between goblin and knight
+                this.goblinArray.push(this.goblin)
+                for (let a = 0; a < this.goblinArray.length; a++){
+                    this.physics.add.collider(this.goblin, this.goblinArray[a]); // adds collison for every goblin
+                }
+                this.goblin.setCollideWorldBounds(true); // stops the goblin from leaving the map
+                console.log(this.goblinArray)
             },
             loop: true
         });
 
 
-
-        // MAKE ARRAY FOR GOBLIN COLLISION
-
-
-        // create controls
+    // create controls
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // game follows the knight
+    // game follows the knight
         this.cameras.main.startFollow(this.knight)
         // this.cameras.main.setZoom(2);
 
@@ -61,13 +68,17 @@ class GameScene extends Phaser.Scene {
 
     update () {
 
+        // if (this.knight.active == false) {
+        //     alert("game over");
+        //     this.scene.stop('GameScene'); //stops the game when the knight dies
+        //     return; // ends the update
+        // }
+
     // makes goblins follow knight
         for (let i = 0; i < this.goblinArray.length; i++) {
             this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
-            for (let a = 0; a < this.goblinArray.length; a++){
-                this.physics.add.collider(this.goblinArray[i], this.goblinArray[a]);
-            }
         }
+
         this.goblin.anims.play('gmoving', true);
 
 
@@ -113,8 +124,6 @@ class GameScene extends Phaser.Scene {
             this.knight.setVelocity(Math.sqrt(11250),Math.sqrt(11250));
             this.knight.anims.play('kmoving', true);
         }
-
-
 
         if (this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown || this.cursors.down.isDown) {
         } else {
