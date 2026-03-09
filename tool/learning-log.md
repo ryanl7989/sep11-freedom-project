@@ -137,3 +137,39 @@ for (let i = 0; i < this.goblinArray.length; i++) {
 }
 ```
 The first loop was a loop that I made before which was used to make each goblin in an array of goblins, follow the knight. I used this loop to make a new loop inside of it which would select any new goblins in an array and add collision between it and any previous goblins. and since this was in the update section of phaser, it would constantly repeat, adding collision with any new goblins that would be created.
+
+
+### 3/8/2026
+
+Today I learned how to give my sprite an attack animation in this [file](../game.js). First I searched for a sprite sheet online and found this one:
+<br>![slash sprite sheet](../assets/slashSpriteSheet.png)<br> Then I turned the sprite sheet image into a json file using using this [webstite](https://www.leshylabs.com/apps/sstool/). After I turned it into a json file, I added it into my assest folder and linked them to my code using this code:
+
+```js
+this.load.atlas('slash', 'assets/slashSpriteSheet.png', 'assets/slashSprites.json');
+```
+
+and
+
+```js
+this.anims.create({ key:'attack', frames: this.anims.generateFrameNames('slash', {prefix:'slash', end: 9, zeroPad:1}), repeat: 0});
+```
+
+This code adds the sprite sheet to my code so when I acess it, my code knows where to get it and also adds the animation by cycling though each frame quickly. Then I used the following code to make it so that when I click it does a slash where my knight is.
+
+```js
+this.input.on('pointerdown', function (pointer) {
+    this.slash = this.physics.add.sprite(this.knight.x, this.knight.y, 'slash'); // creates the slash sprite on the knight sprite
+    this.slash.scale = 2.5    // makes the slash 3 times bigger than original
+    this.slash.anims.play('attack', true); // plays animations when there is a click
+
+    this.time.addEvent({
+        delay: 350,
+        callback: () => {
+            this.slash.setVisible(false)
+            this.slash.destroy()
+        },
+    });
+}, this);
+```
+
+This makes it so that when you click, the slash will appear on the knight and it will make the slash 2.5 times bigger than the original.
