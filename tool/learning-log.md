@@ -6,7 +6,7 @@
 
 ---
 
-### 10/5/2025:
+### 10/5/2025 Log 1:
 Today I watched and followed along with https://www.youtube.com/watch?v=UAdWDHb3zPQ which was a tutorial on the basics and made a small animation of balls bouncing against walls using phaser. I also learned the main functions of Phaser like `preload()` `create()` `update()` froomo this  tutorial.
 * `preload()` loads game assets like pictures before the game begins.
 * `create()` adds objects like sprites into the game.
@@ -64,7 +64,7 @@ I  thought that I had done something wrong like putting something in the wrong p
 * What you're going to try next
 -->
 
-### 10/30/2025:
+### 10/30/2025 Log 2:
 * Today I followed along with this video on sprites "https://www.youtube.com/watch?v=ElAmJj8Tfo8"
   * `this.load.atlas()` can be used to load sprite sheets for animation
   * Learned how to make moving controls using `setVelocity()`
@@ -76,7 +76,7 @@ I  thought that I had done something wrong like putting something in the wrong p
   *  Learn how to make the camera follow the sprite
 
 
-### 11/16/2025:
+### 11/16/2025 Log 3:
 * Today I learned how to make the screen follow a sprite in this [file](phaser-tinkering2/game.js) that I used last week that already had a sprite.
   * `this.cameras.main.startFollow()` follows the sprite that is put between the parenthesis
   * `this.cameras.main.setZoom()` changes the amount of zoom on the screen
@@ -89,7 +89,7 @@ I  thought that I had done something wrong like putting something in the wrong p
   *  Add another sprite that moves towards the main sprite
 
 
-### 11/23/2025:
+### 11/23/2025 Log 4:
 * Today I learned how to make one sprite follow another sprite in this [file](phaser-tinkering2/game.js) that I used for the last 2 weeks.
   * Found a [goblin sprite](https://craftpix.net/product/goblin-pixel-art-character-sprite-pack/?srsltid=AfmBOootY-nkddgt8bIpCCCiCR8Y3AUCUl-iv3kKVcvMDsy1TjmWG_Ug) online and created another sprite called "goblin" to follow the knight
   * Used the goblin spritesheet to make a walking animation for the goblin
@@ -97,7 +97,7 @@ I  thought that I had done something wrong like putting something in the wrong p
   * Used [Phaser Documentation](https://docs.phaser.io/phaser/concepts/physics/arcade) to learn the code
 
 
-### 12/5/2025
+### 12/5/2025 Log 5:
 
 Today I made sprites spawn in random places in the scene in this [file](phaser-tinkering2/game.js) that I used before which had goblin sprites inside already.
 I made the goblins spawn in random places around the map using this code:
@@ -125,7 +125,7 @@ this.goblin.anims.play('gmoving', true);
 ```
 
 
-### 12/14/2025
+### 12/14/2025 Log 6:
 Today I learned how to add collision between sprites in this [file](phaser-tinkering2/game.js) using a knight and a goblin sprite. I used this code `this.physics.add.collider(this.goblin, this.knight);` which would stop the knight and the goblin from going through each other. A problem that I had was that when I spawned new goblins, they would walk through each other. I fixed this by makeing a loop inside a loop. This is what it looked like:
 
 ```js
@@ -139,7 +139,7 @@ for (let i = 0; i < this.goblinArray.length; i++) {
 The first loop was a loop that I made before which was used to make each goblin in an array of goblins, follow the knight. I used this loop to make a new loop inside of it which would select any new goblins in an array and add collision between it and any previous goblins. and since this was in the update section of phaser, it would constantly repeat, adding collision with any new goblins that would be created.
 
 
-### 3/8/2026
+### 3/8/2026 Log 8:
 
 Today I learned how to give my sprite an attack animation in this [file](../game.js). First I searched for a sprite sheet online and found this one:
 <br>![slash sprite sheet](../assets/slashSpriteSheet.png)<br> Then I turned the sprite sheet image into a json file using using this [webstite](https://www.leshylabs.com/apps/sstool/). After I turned it into a json file, I added it into my assest folder and linked them to my code using this code:
@@ -173,3 +173,20 @@ this.input.on('pointerdown', function (pointer) {
 ```
 
 This makes it so that when you click, the slash will appear on the knight and it will make the slash 2.5 times bigger than the original.
+
+
+
+### 3/22/2026 Log 9:
+
+Today I tried to add a timer to my game to count how long the player has survived for. First I added a text value by using this code:
+
+```js
+this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } );
+```
+
+This code will spawn text on my knight that says "Time:0s" in green. Next I needed to make it so that I could count the time that the game was running for and there was a peice of code that did that which was `var times = Math.floor(this.time.now * 0.001);` This put the time in seconds into the variable times. then I used `.setText` to change the text in the timer to game time in seconds. Then I needed to put the timer in the right position which was at the top of the players screen which was a problem because the game screen would follow the knight instead of staying in a fixed position so I moved the timer relative to the knights x and y cordinate using this code:
+
+```js
+this.timer.x = (this.knight.x-55)
+this.timer.y = (this.knight.y - 250)
+```

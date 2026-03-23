@@ -9,11 +9,11 @@
 
 #### MVP
 
-- [ ] Create sprite with player controled movement (deadline: 2/25)
-  - [ ] Give it a way to attack other sprites (deadline: 3/15)
-- [ ] Create another sprite that moves toward the other sprite (deadline: 2/28)
-  - [ ] Spawn one of these sprites every few seconds (deadline: 3/2)
-  - [ ] when this sprite collides with the player controlled sprite it kills the sprite (deadline: 3/10)
+- [x] Create sprite with player controled movement (deadline: 2/25)
+  - [x] Give it a way to attack other sprites (deadline: 3/15)
+- [x] Create another sprite that moves toward the other sprite (deadline: 2/28)
+  - [x] Spawn one of these sprites every few seconds (deadline: 3/2)
+  - [x] when this sprite collides with the player controlled sprite it kills the player controlled sprite (deadline: 3/10)
 - [ ] Add increasing difficulty (deadline: 3/22)
   - [ ] Happens at certain time threasholds (deadline: 3/25)
 - [ ] Add a timer to count how long you survive (deadline: 3/10)

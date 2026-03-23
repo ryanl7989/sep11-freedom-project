@@ -9,10 +9,11 @@ class GameScene extends Phaser.Scene {
         this.load.atlas('knight', 'assets/knightSpriteSheet.png', 'assets/knightSprites.json');
         this.load.atlas('goblin', 'assets/goblinSpriteSheet.png', 'assets/goblinSprites.json');
         this.load.atlas('slash', 'assets/slashSpriteSheet.png', 'assets/slashSprites.json');
-        this.load.atlas('slashHitbox', 'assets/slashAttackHitbox.png');
+
 
         // images
         this.load.image('oldDungeon', 'assets/oldDungeon.png');
+        this.load.image('slashHitbox', 'assets/slashAttackHitbox.png');
     }
 
     create() {
@@ -74,7 +75,7 @@ class GameScene extends Phaser.Scene {
 
     // game follows the knight
         this.cameras.main.startFollow(this.knight);
-        // this.cameras.main.setZoom(2); // set zoom
+        this.cameras.main.setZoom(2); // set zoom
 
     // knight attack
         this.slashExist = false
@@ -86,9 +87,9 @@ class GameScene extends Phaser.Scene {
 
                 this.slashHitbox = this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox'); // makes hotbox of the slash attack
                 this.slashHitbox.visible = false; // makes it invisible
-                this.slashHitbox.scale = 2.5; // sets how big it should be
+                this.slashHitbox.scale = 2; // sets how big it should be
 
-                this.slash.scale=1.3;  // makes the slash 3 times bigger than original
+                this.slash.scale=1.5;  // makes the slash 1.5 times bigger than original
 
                 this.slash.anims.play('attack', true); // plays animations when there is a click
                 this.slashExist = true
@@ -112,21 +113,30 @@ class GameScene extends Phaser.Scene {
                     delay: 350,
                     callback: () => {
                         this.slashExist = false
-                        this.slash.setVisible(false)
-                        this.slash.destroy()
-                        this.slashHitbox.destroy()
-                        console.log("destroyed") // pass
+                        this.slash.setVisible(false) // makes the slash invisibe
+                        this.slash.destroy() // destorys the slash
+                        this.slashHitbox.destroy() // destorys the hitbox
+
+                        // testing
+                        console.log("destroyed")
                         console.log(this.slashExist)
                     },
                 });
-            } else {console.log("cooldown")}
+            } else {console.log("cooldown")} // tells me when the attack is on cooldown
         }, this);
 
+        this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } );
     }
+
+
 
     update () {
 
+        this.timer.x = (this.knight.x-55)
+        this.timer.y = (this.knight.y - 250)
 
+        var times = Math.floor(this.time.now * 0.001);
+        this.timer.setText("Time:" + times + "s");
 
     // Game Over
         if (this.knight.active == false) {
@@ -135,15 +145,14 @@ class GameScene extends Phaser.Scene {
             return; // ends the update
         }
 
+
     // makes goblins follow knight
         for (let i = 0; i < this.goblinArray.length; i++) {
             this.physics.moveToObject(this.goblinArray[i], this.knight, 100);
-
+        }
 
     // goblin animation
-        }
         if(this.goblinArray.length == 0){ // If no goblins exist, stop animations from playing
-            console.log(this.goblinArray.length)
         } else {
             this.goblin.anims.play('gmoving', true); // plays moving animation for goblins
         }
