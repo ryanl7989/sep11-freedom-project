@@ -35,6 +35,9 @@ class GameScene extends Phaser.Scene {
 
         this.anims.create({ key:'gmoving', frames: this.anims.generateFrameNames('goblin', {prefix:'goblin', end: 4, zeroPad:1}), repeat: -1});
 
+    // game instructions
+        alert("Arrow keys to move, click to attack")
+
     // knight spawner
         this.knight = this.physics.add.sprite(backgroundImage.width/2, backgroundImage.height/2, 'knight'); // spawns knight in the center
         this.knight.setCollideWorldBounds(true); // stops the knight from leaving the map
