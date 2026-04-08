@@ -14,11 +14,8 @@
 - [x] Create another sprite that moves toward the other sprite (deadline: 2/28)
   - [x] Spawn one of these sprites every few seconds (deadline: 3/2)
   - [x] when this sprite collides with the player controlled sprite it kills the player controlled sprite (deadline: 3/10)
-- [ ] Add increasing difficulty (deadline: 3/22)
-  - [ ] Happens at certain time threasholds (deadline: 3/25)
-- [ ] Add a timer to count how long you survive (deadline: 3/10)
-- [ ] Give health bars to sprites (deadline: 4/8)
-  - [ ] Player controled sprite slowly heals (deadline: 4/10)
+- [x] Add increasing difficulty (deadline: 3/22)
+- [x] Add a timer to count how long you survive (deadline: 3/10)
 
 #### Beyond MVP
 
@@ -26,6 +23,7 @@
   - [ ] Give option to replay
 - [ ] Add a long ranged sprite
 - [ ] Add attacking animations
+- [ ] Fix hitboxes
 
 
 <!-- EXAMPLE

@@ -190,3 +190,4 @@ This code will spawn text on my knight that says "Time:0s" in green. Next I need
 this.timer.x = (this.knight.x-55)
 this.timer.y = (this.knight.y - 250)
 ```
+

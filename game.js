@@ -47,11 +47,18 @@ class GameScene extends Phaser.Scene {
 
         this.goblin = this.physics.add.sprite(10000, 10000, 'goblin'); // makes goblin variable
 
-
+        var delaySpeed = 4000
+        var goblinSpawned = 0
         this.goblinArray = []
         this.time.addEvent({
-            delay: 4000,
+            delay: delaySpeed,
             callback: () => {
+                goblinSpawned++;
+                if(goblinSpawned%5 == 0){ // every 5 seconds, speed up goblin spawn rate by 10%
+                    delaySpeed = delaySpeed * (0.9);
+                }
+                console.log(delaySpeed)
+                console.log(goblinSpawned)
                 this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin'); // creates the goblin at a random place
                 function destroyknight() {
                     this.knight.destroy(); // if the knight hits a goblin the knight gets destroyed
@@ -81,8 +88,8 @@ class GameScene extends Phaser.Scene {
         this.slashExist = false
         this.input.on('pointerdown', function (pointer) {
             console.log("clicked")
+            console.log(this.goblinArray.length)
             if(this.slashExist == false) {
-                console.log("clicked & hit")
                 this.slash = this.physics.add.sprite(this.knight.x, this.knight.y, 'slash'); // creates the slash sprite on the knight sprite
 
                 this.slashHitbox = this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox'); // makes hotbox of the slash attack
@@ -101,7 +108,6 @@ class GameScene extends Phaser.Scene {
                         goblin.destroy(); // if a goblin gets hit by a slash it gets destroyed
                         var index = this.goblinArray.indexOf(goblin) // finds the index of the goblin that is hit by a slash
                         this.goblinArray.splice(index, 1) // removes the goblin sprite from the goblin array
-                        console.log("hit")
                     }
 
                         this.physics.add.collider(this.slashHitbox, this.goblinArray[b], destroygoblin, null, this); // adds collision between the slash and all goblins
@@ -118,25 +124,25 @@ class GameScene extends Phaser.Scene {
                         this.slashHitbox.destroy() // destorys the hitbox
 
                         // testing
-                        console.log("destroyed")
                         console.log(this.slashExist)
                     },
                 });
             } else {console.log("cooldown")} // tells me when the attack is on cooldown
         }, this);
 
-        this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } );
+        this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } ); // sets timer text
     }
 
 
 
     update () {
-
+    // timer
+        // position of the timer
         this.timer.x = (this.knight.x-55)
         this.timer.y = (this.knight.y - 250)
 
-        var times = Math.floor(this.time.now * 0.001);
-        this.timer.setText("Time:" + times + "s");
+        var times = Math.floor(this.time.now * 0.001); // rounds to seconds
+        this.timer.setText("Time:" + times + "s"); // text
 
     // Game Over
         if (this.knight.active == false) {
@@ -152,7 +158,7 @@ class GameScene extends Phaser.Scene {
         }
 
     // goblin animation
-        if(this.goblinArray.length == 0){ // If no goblins exist, stop animations from playing
+        if(this.goblinArray.length == 0){ // If no goblins exist, stop animations from playingxcx
         } else {
             this.goblin.anims.play('gmoving', true); // plays moving animation for goblins
         }
@@ -226,7 +232,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {y:0, x:0},
-            debug: true
+            // debug: true // Hitboxes for debug
         }
     },
     scene: [ GameScene ]
