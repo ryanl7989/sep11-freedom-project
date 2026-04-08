@@ -232,7 +232,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {y:0, x:0},
-            debug: true // Hitboxes for debug
+            // debug: true // Hitboxes for debug
         }
     },
     scene: [ GameScene ]
