@@ -94,7 +94,7 @@ class GameScene extends Phaser.Scene {
 
                 this.slashHitbox = this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox'); // makes hotbox of the slash attack
                 this.slashHitbox.visible = false; // makes it invisible
-                this.slashHitbox.scale = 2; // sets how big it should be
+                this.slashHitbox.scale = 1.7; // sets how big it should be
 
                 this.slash.scale=1.5;  // makes the slash 1.5 times bigger than original
 
