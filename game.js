@@ -60,8 +60,7 @@ class GameScene extends Phaser.Scene {
                 if(goblinSpawned%5 == 0){ // every 5 seconds, speed up goblin spawn rate by 10%
                     delaySpeed = delaySpeed * (0.9);
                 }
-                console.log(delaySpeed)
-                console.log(goblinSpawned)
+
                 this.goblin = this.physics.add.sprite(Math.random()*(backgroundImage.width), Math.random()*(backgroundImage.height), 'goblin'); // creates the goblin at a random place
                 function destroyknight() {
                     this.knight.destroy(); // if the knight hits a goblin the knight gets destroyed
@@ -74,7 +73,9 @@ class GameScene extends Phaser.Scene {
                     this.physics.add.collider(this.goblinArray[a], this.goblin); // adds collison for every goblin
                 }
                 this.goblin.setCollideWorldBounds(true); // stops the goblin from leaving the map
-                console.log(this.goblinArray);
+                console.log(this.goblinArray); // testing
+                console.log(delaySpeed); // testing
+                console.log(goblinSpawned); // testing
             },
             loop: true
         });
@@ -89,21 +90,17 @@ class GameScene extends Phaser.Scene {
 
     // knight attack
         this.slashExist = false
-        this.input.on('pointerdown', function (pointer) {
-            console.log("clicked")
+        this.input.on('pointerdown', function () {
             console.log(this.goblinArray.length)
             if(this.slashExist == false) {
-                this.slash = this.physics.add.sprite(this.knight.x, this.knight.y, 'slash'); // creates the slash sprite on the knight sprite
-
                 this.slashHitbox = this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox'); // makes hotbox of the slash attack
                 this.slashHitbox.visible = false; // makes it invisible
                 this.slashHitbox.scale = 1.7; // sets how big it should be
 
+                this.slash = this.physics.add.sprite(this.knight.x, this.knight.y, 'slash'); // creates the slash sprite on the knight sprite
                 this.slash.scale=1.5;  // makes the slash 1.5 times bigger than original
-
                 this.slash.anims.play('attack', true); // plays animations when there is a click
                 this.slashExist = true
-
 
 
                 for (let b = 0; b < this.goblinArray.length; b++){
@@ -112,25 +109,20 @@ class GameScene extends Phaser.Scene {
                         var index = this.goblinArray.indexOf(goblin) // finds the index of the goblin that is hit by a slash
                         this.goblinArray.splice(index, 1) // removes the goblin sprite from the goblin array
                     }
-
-                        this.physics.add.collider(this.slashHitbox, this.goblinArray[b], destroygoblin, null, this); // adds collision between the slash and all goblins
-
+                    this.physics.add.collider(this.slashHitbox, this.goblinArray[b], destroygoblin, null, this); // adds collision between the slash and all goblins
                 }
+
 
                 // 0.35 seconds after I click the attack animation will end and the slash will be deleted.
                 this.time.addEvent({
                     delay: 350,
                     callback: () => {
                         this.slashExist = false
-                        this.slash.setVisible(false) // makes the slash invisibe
                         this.slash.destroy() // destorys the slash
                         this.slashHitbox.destroy() // destorys the hitbox
-
-                        // testing
-                        console.log(this.slashExist)
                     },
                 });
-            } else {console.log("cooldown")} // tells me when the attack is on cooldown
+            }
         }, this);
 
         this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } ); // sets timer text
@@ -235,7 +227,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {y:0, x:0},
-            // debug: true // Hitboxes for debug
+            debug: true // Hitboxes for debug
         }
     },
     scene: [ GameScene ]

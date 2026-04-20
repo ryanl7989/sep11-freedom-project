@@ -23,7 +23,7 @@
   - [ ] Give option to replay
 - [ ] Add a long ranged sprite
 - [ ] Add attacking animations
-- [ ] Fix hitboxes
+- [x] Fix hitboxes
 
 
 <!-- EXAMPLE

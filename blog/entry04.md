@@ -35,7 +35,7 @@ this.input.on('pointerdown', function (pointer) {
             this.slash.destroy()
         },
     });
-}
+})
 ```
 
 I played around with this for a while but realized that I could not hit any goblins. I tried making a loop and inside I created a function that would delete a goblin for each goblin that was spawned and also a so that when it was ran it would make collider between each goblin and the slash. This did not work though, but I had no idea how to fix it even after a long time so I decided to ask Ai to debug it for me and it told me that the reason that it was not working was because I could not use `this.goblinArray` inside of the function because the `this.` would refer to the function instead of the goblin array so I had to use a arrow function. This is what that looked like:
