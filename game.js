@@ -53,6 +53,7 @@ class GameScene extends Phaser.Scene {
         var delaySpeed = 4000
         var goblinSpawned = 0
         this.goblinArray = []
+        this.hitboxArray = []
         this.time.addEvent({
             delay: delaySpeed,
             callback: () => {
@@ -73,9 +74,6 @@ class GameScene extends Phaser.Scene {
                     this.physics.add.collider(this.goblinArray[a], this.goblin); // adds collison for every goblin
                 }
                 this.goblin.setCollideWorldBounds(true); // stops the goblin from leaving the map
-                console.log(this.goblinArray); // testing
-                console.log(delaySpeed); // testing
-                console.log(goblinSpawned); // testing
             },
             loop: true
         });
@@ -90,12 +88,15 @@ class GameScene extends Phaser.Scene {
 
     // knight attack
         this.slashExist = false
+        this.slashHitboxArray = []
         this.input.on('pointerdown', function () {
             console.log(this.goblinArray.length)
             if(this.slashExist == false) {
-                this.slashHitbox = this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox'); // makes hotbox of the slash attack
-                this.slashHitbox.visible = false; // makes it invisible
-                this.slashHitbox.scale = 1.7; // sets how big it should be
+                for(let i=0; i<7; i++){
+                    this.slashHitboxArray.push(this.physics.add.sprite(this.knight.x, this.knight.y, 'slashHitbox')); // makes hotbox of the slash attack
+                    this.slashHitboxArray[i].visible = false; // makes it invisible
+                    this.slashHitboxArray[i].scale = (1+((i+0.1)/10)); // sets how big it should be
+                }
 
                 this.slash = this.physics.add.sprite(this.knight.x, this.knight.y, 'slash'); // creates the slash sprite on the knight sprite
                 this.slash.scale=1.5;  // makes the slash 1.5 times bigger than original
@@ -109,7 +110,9 @@ class GameScene extends Phaser.Scene {
                         var index = this.goblinArray.indexOf(goblin) // finds the index of the goblin that is hit by a slash
                         this.goblinArray.splice(index, 1) // removes the goblin sprite from the goblin array
                     }
-                    this.physics.add.collider(this.slashHitbox, this.goblinArray[b], destroygoblin, null, this); // adds collision between the slash and all goblins
+                    for(let i = 0; i<this.slashHitboxArray.length; i++){
+                        this.physics.add.collider(this.slashHitboxArray[i], this.goblinArray[b], destroygoblin, null, this); // adds collision between the slash and all goblins
+                    }
                 }
 
 
@@ -119,13 +122,18 @@ class GameScene extends Phaser.Scene {
                     callback: () => {
                         this.slashExist = false
                         this.slash.destroy() // destorys the slash
-                        this.slashHitbox.destroy() // destorys the hitbox
+                        for(let i=this.slashHitboxArray.length-1; i>-1; i--){
+                            this.slashHitboxArray[i].destroy() // destroys the hitbox
+                            this.slashHitboxArray.pop()
+                        }
                     },
                 });
             }
         }, this);
 
         this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } ); // sets timer text
+        this.timeNum = 0
+        this.elapsedSecs = this.time.elapsedSeconds
     }
 
 
@@ -136,13 +144,14 @@ class GameScene extends Phaser.Scene {
         this.timer.x = (this.knight.x-55)
         this.timer.y = (this.knight.y - 250)
 
-        var times = Math.floor(this.time.now * 0.001); // rounds to seconds
+
+        this.timeNum += (1/100)
+        var times = Math.floor(this.timeNum); // rounds to seconds
         this.timer.setText("Time:" + times + "s"); // text
 
     // Game Over
         if (this.knight.active == false) {
-            alert("game over");
-            this.scene.stop('GameScene'); //stops the game when the knight dies
+            this.scene.start('GameEndScene'); //stops the game when the knight dies
             return; // ends the update
         }
 
@@ -153,11 +162,9 @@ class GameScene extends Phaser.Scene {
         }
 
     // goblin animation
-        if(this.goblinArray.length == 0){ // If no goblins exist, stop animations from playingxcx
-        } else {
-            this.goblin.anims.play('gmoving', true); // plays moving animation for goblins
+        for (let i = 0; i < this.goblinArray.length; i++) {
+            this.goblinArray[i].anims.play('gmoving', true); // plays moving animation for each goblin
         }
-
 
 
     // controls
@@ -213,6 +220,39 @@ class GameScene extends Phaser.Scene {
 
     }
 }
+
+class GameEndScene extends Phaser.Scene {
+    constructor() {
+        super('GameEndScene')
+    }
+
+    preload() {
+
+    }
+
+    create() {
+
+        this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/3, 'Game Over', {
+            fontFamily: 'Arial',
+            fontSize: '50px',
+            color: '#000000'
+        }).setOrigin(0.5);
+
+        this.add.text(this.sys.game.config.width/2, this.sys.game.config.height/2, 'Click to play Again', {
+            fontFamily: 'Arial',
+            fontSize: '50px',
+            color: '#000000'
+        }).setOrigin(0.5);
+
+        this.input.on('pointerdown', function () {
+            this.scene.start('GameScene');
+        },this)
+    }
+
+    update() {
+
+    }
+}
 // game configuration
 const config = {
     type: Phaser.AUTO,
@@ -227,10 +267,10 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {y:0, x:0},
-            debug: true // Hitboxes for debug
+            // debug: true // Hitboxes for debug
         }
     },
-    scene: [ GameScene ]
+    scene: [ GameScene, GameEndScene ]
 }
 
 const game = new Phaser.Game(config)
