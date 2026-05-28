@@ -1,3 +1,63 @@
+class GameStartScene extends Phaser.Scene {
+    constructor() {
+        super('GameStartScene')
+    }
+
+    preload() {
+        this.load.image('cave', 'assets/cave.png');
+    }
+
+    create() {
+        const caveBackground = this.add.image(0, 0, 'cave'); // adds quiz background image
+        caveBackground.setOrigin(0.5, 0.5);
+        caveBackground.setPosition(this.sys.game.config.width / 2, this.sys.game.config.height / 2); // cneters the image
+        const scaleX = this.sys.game.config.width / caveBackground.width;
+        const scaleY = this.sys.game.config.height / caveBackground.height;
+        const scale = Math.max(scaleX, scaleY);
+        caveBackground.setScale(scale);
+
+        this.add.text(this.sys.game.config.width/2, 200, 'Goblin Game', {
+            fontFamily: 'Serif',
+            fontSize: '80px',
+            color: '#50C878'
+        }).setOrigin(0.5);
+
+        this.add.text(this.sys.game.config.width/2, 400, 'Instructions', {
+            fontFamily: 'Serif',
+            fontSize: '60px',
+            color: '#50C878'
+        }).setOrigin(0.5);
+
+        this.add.text(this.sys.game.config.width/2, 500, 'Arrow keys to play', {
+            fontFamily: 'Serif',
+            fontSize: '50px',
+            color: '#50C878'
+        }).setOrigin(0.5);
+
+
+        this.add.text(this.sys.game.config.width/2, 600, 'Click to attack', {
+            fontFamily: 'Serif',
+            fontSize: '50px',
+            color: '#50C878'
+        }).setOrigin(0.5);
+
+        this.add.text(this.sys.game.config.width/2, 780, 'Click to Play', {
+            fontFamily: 'Serif',
+            fontSize: '60px',
+            color: '#50C878'
+        }).setOrigin(0.5);
+
+        this.input.on('pointerdown', function () {
+            this.scene.start('GameScene');
+        },this)
+    }
+
+    update() {
+
+    }
+}
+
+
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene')
@@ -34,9 +94,6 @@ class GameScene extends Phaser.Scene {
         this.anims.create({ key:'attack', frames: this.anims.generateFrameNames('slash', {prefix:'slash', end: 9, zeroPad:1}), repeat: 0});
 
         this.anims.create({ key:'gmoving', frames: this.anims.generateFrameNames('goblin', {prefix:'goblin', end: 4, zeroPad:1}), repeat: -1});
-
-    // game instructions
-        alert("Arrow keys to move, click to attack")
 
     // knight spawner
         this.knight = this.physics.add.sprite(backgroundImage.width/2, backgroundImage.height/2, 'knight'); // spawns knight in the center
@@ -130,6 +187,8 @@ class GameScene extends Phaser.Scene {
                 });
             }
         }, this);
+
+
 
         this.timer = this.add.text(this.knight.x, this.knight.y, "Time:" + 0 + "s", { fontFamily: 'Arial', fontSize: 30, color: '#00ff00' } ); // sets timer text
         this.timeNum = 0
@@ -253,6 +312,8 @@ class GameEndScene extends Phaser.Scene {
 
     }
 }
+
+
 // game configuration
 const config = {
     type: Phaser.AUTO,
@@ -270,7 +331,7 @@ const config = {
             // debug: true // Hitboxes for debug
         }
     },
-    scene: [ GameScene, GameEndScene ]
+    scene: [ GameStartScene, GameScene, GameEndScene ]
 }
 
 const game = new Phaser.Game(config)
