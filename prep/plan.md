@@ -19,10 +19,10 @@
 
 #### Beyond MVP
 
-- [ ] Add an ending screen
-  - [ ] Give option to replay
+- [x] Add an ending screen
+  - [x] Give option to replay
 - [ ] Add a long ranged sprite
-- [ ] Add attacking animations
+- [x] Add attacking animations
 - [x] Fix hitboxes
 
 

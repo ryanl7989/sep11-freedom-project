@@ -1,16 +1,22 @@
 # Presentation Plan
 
 ## Hook
-* 
+* Do you like goblins?
 
 ## Product
-* 
+* Demo of the game
+* pictures of the sprites
 
 ## Process
-* 
+* Explanation of my tool
+* Show code snipets of my knight's hitbox and explain it
+* Show before and after of code of a challenge I had with the hitboxes
 
 ## Conclusion
-* 
+* [Game Link](https://ryanl7989.github.io/sep11-freedom-project/)
+* Takeaways
+  * Think of new solutions: Instead of getting tunnel vision on one specific solution, open your mind to the possiblities. I got stuck trying to force the hitboxes to work by making multiple sprites manually when all I had to do was make a array to do it all at once.
+  * Spend your time wisely: I spent a really long time trying to fix a small bug that happened when the hitboxx hit the goblin in a specific spot instead of working on making a long ranged enemy which was something I really wanted to do for this project.
 
 <!-- EXAMPLE
 

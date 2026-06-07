@@ -18,7 +18,7 @@ class GameStartScene extends Phaser.Scene {
 
         this.add.text(this.sys.game.config.width/2, 200, 'Goblin Game', {
             fontFamily: 'Serif',
-            fontSize: '80px',
+            fontSize: '90px',
             color: '#50C878'
         }).setOrigin(0.5);
 
@@ -115,7 +115,7 @@ class GameScene extends Phaser.Scene {
             delay: delaySpeed,
             callback: () => {
                 goblinSpawned++;
-                if(goblinSpawned%5 == 0){ // every 5 seconds, speed up goblin spawn rate by 10%
+                if(goblinSpawned%2 == 0){ // every 2 goblins spawned, speed up goblin spawn rate by 10%
                     delaySpeed = delaySpeed * (0.9);
                 }
 
@@ -204,7 +204,7 @@ class GameScene extends Phaser.Scene {
         this.timer.y = (this.knight.y - 250)
 
 
-        this.timeNum += (1/100)
+        this.timeNum += (1/60)
         var times = Math.floor(this.timeNum); // rounds to seconds
         this.timer.setText("Time:" + times + "s"); // text
 
@@ -231,11 +231,13 @@ class GameScene extends Phaser.Scene {
 
         if (this.cursors.left.isDown) // move left
         {
+            this.knight.setFlipX(true);
             this.knight.setVelocityX(-150);
             this.knight.anims.play('kmoving', true);
         }
         else if (this.cursors.right.isDown) // move right
         {
+            this.knight.setFlipX(false);
             this.knight.setVelocityX(150);
             this.knight.anims.play('kmoving', true);
         }
@@ -255,18 +257,22 @@ class GameScene extends Phaser.Scene {
         // makes it so that holding two buttons doesn't make you faster
 
         if ((this.cursors.up.isDown == true &&  this.cursors.left.isDown == true)) {
+            this.knight.setFlipX(true);
             this.knight.setVelocity(-Math.sqrt(11250),-Math.sqrt(11250));
             this.knight.anims.play('kmoving', true);
         }
         if ((this.cursors.up.isDown == true &&  this.cursors.right.isDown == true)) {
+            this.knight.setFlipX(false);
             this.knight.setVelocity(Math.sqrt(11250),-Math.sqrt(11250));
             this.knight.anims.play('kmoving', true);
         }
         if ((this.cursors.down.isDown == true &&  this.cursors.left.isDown == true)) {
+            this.knight.setFlipX(true);
             this.knight.setVelocity(-Math.sqrt(11250),Math.sqrt(11250));
             this.knight.anims.play('kmoving', true);
         }
         if ((this.cursors.down.isDown == true &&  this.cursors.right.isDown == true)) {
+            this.knight.setFlipX(false);
             this.knight.setVelocity(Math.sqrt(11250),Math.sqrt(11250));
             this.knight.anims.play('kmoving', true);
         }
